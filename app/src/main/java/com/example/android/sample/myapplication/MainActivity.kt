@@ -1,10 +1,10 @@
 package com.example.android.sample.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_detail.*
 
@@ -24,9 +24,26 @@ class MainActivity : AppCompatActivity() {
         if (container_detail != null) isTwoPane = true
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            goEditScreen("","","", false, ModeInEdit.NEW_ENTRY)
         }
+    }
+
+    private fun goEditScreen(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) {
+        if (isTwoPane) {
+
+            supportFragmentManager.beginTransaction()
+                                  .add(R.id.container_detail, EditFragment.newInstance("1", "1"))
+                                  .commit()
+            return
+        }
+        val intent = Intent(this@MainActivity, EditActivity::class.java).apply {
+            putExtra(IntentKey.TITLE.name, title)
+            putExtra(IntentKey.DEADLINE.name, deadline)
+            putExtra(IntentKey.TASK_DETAIL.name, taskDetail)
+            putExtra(IntentKey.IS_COMPLETED.name, isCompleted)
+            putExtra(IntentKey.MODE_IN_EDIT.name, mode)
+        }
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
