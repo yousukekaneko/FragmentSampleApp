@@ -3,15 +3,17 @@ package com.example.android.sample.myapplication
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private var ARG_title = IntentKey.TITLE.name
+private var ARG_deadline = IntentKey.DEADLINE.name
+private var ARG_taskdetail = IntentKey.TASK_DETAIL.name
+private var ARG_iscompleted = IntentKey.IS_COMPLETED.name
+private var ARG_mode = IntentKey.MODE_IN_EDIT.name
+
 
 /**
  * A simple [Fragment] subclass.
@@ -22,16 +24,23 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class EditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var title: String? = ""
+    private var deadline: String? = ""
+    private var taskDetail: String? = ""
+    private var isCompleted: Boolean = false
+    private var mode: ModeInEdit? = null
+
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            title = it.getString(ARG_title)
+            deadline = it.getString(ARG_deadline)
+            taskDetail = it.getString(ARG_taskdetail)
+            isCompleted = it.getBoolean(ARG_iscompleted)
+            mode = it.getSerializable(ARG_title) as ModeInEdit
+
         }
     }
 
@@ -39,13 +48,29 @@ class EditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit, container, false)
+        setHasOptionsMenu(true)
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu!!.apply {
+            findItem(R.id.menu_delete).isVisible = false
+            findItem(R.id.menu_edit).isVisible = false
+            findItem(R.id.menu_register).isVisible = false
+
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        // TODO DBへの登録処理
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onAttach(context: Context) {
@@ -89,11 +114,14 @@ class EditFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) =
             EditFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_title, title)
+                    putString(ARG_deadline, deadline)
+                    putString(ARG_taskdetail, taskDetail)
+                    putBoolean(ARG_iscompleted, isCompleted)
+                    putSerializable(ARG_mode, mode)
                 }
             }
     }

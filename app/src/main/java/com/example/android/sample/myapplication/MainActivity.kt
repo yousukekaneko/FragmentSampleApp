@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         if (isTwoPane) {
 
             supportFragmentManager.beginTransaction()
-                                  .add(R.id.container_detail, EditFragment.newInstance("1", "1"))
+                                  .add(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
                                   .commit()
             return
         }
