@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_edit.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +52,22 @@ class EditFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_edit, container, false)
         setHasOptionsMenu(true)
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        updateUi(mode!!)
+    }
+
+    private fun updateUi(mode: ModeInEdit) {
+        when(mode) {
+            ModeInEdit.NEW_ENTRY -> {
+
+            }
+            ModeInEdit.EDIT -> {
+                checkBox.visibility = View.INVISIBLE
+            }
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
