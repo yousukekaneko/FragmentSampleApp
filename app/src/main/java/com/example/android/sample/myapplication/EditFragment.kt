@@ -1,7 +1,6 @@
 package com.example.android.sample.myapplication
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -57,6 +56,9 @@ class EditFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         updateUi(mode!!)
+        imageButtonDateSet.setOnClickListener {
+            listener!!.onDataPickerLaunched()
+        }
     }
 
     private fun updateUi(mode: ModeInEdit) {
@@ -68,11 +70,6 @@ class EditFragment : Fragment() {
                 checkBox.visibility = View.INVISIBLE
             }
         }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -116,8 +113,7 @@ class EditFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onDataPickerLaunched()
     }
 
     companion object {

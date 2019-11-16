@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_detail.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener {
 
     var isTwoPane: Boolean = false
 
@@ -65,5 +65,10 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // EditFragment.OnFragmentInteractionListener
+    override fun onDataPickerLaunched() {
+        DataPickerDialogFragment().show(supportFragmentManager, FragmentTag.DATE_PICKER.toString())
     }
 }
