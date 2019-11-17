@@ -11,11 +11,11 @@ import java.util.*
 
 class DataPickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
-    var listener: DatePickerDialog.OnDateSetListener? = null
+    var listener: OnDateSetListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is DatePickerDialog.OnDateSetListener) {
+        if (context is OnDateSetListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
@@ -26,22 +26,25 @@ class DataPickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
         super.onDetach()
         listener = null
     }
-    interface OndateSetListener {
-        fun onDateSeleceted()
+
+    interface OnDateSetListener {
+        fun onDateSeleceted(dateString: String)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val calendar = Calendar.getInstance()
-        val year = Calendar.YEAR
-        val month = Calendar.MONTH
-        val day = Calendar.DAY_OF_MONTH
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         return DatePickerDialog(activity, this, year, month, day)
     }
 
     override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
         val dateString = getDateString(year, month, day)
+        listener?.onDateSeleceted(dateString)
+        fragmentManager?.beginTransaction()?.remove(this)?.commit()
     }
 
     private fun getDateString(year: Int, month: Int, day: Int): String {
