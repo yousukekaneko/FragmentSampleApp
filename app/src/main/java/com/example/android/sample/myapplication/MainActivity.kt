@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_detail.*
 
-class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener,
+    DataPickerDialogFragment.OndateSetListener {
 
     var isTwoPane: Boolean = false
 
@@ -70,5 +71,9 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     // EditFragment.OnFragmentInteractionListener
     override fun onDataPickerLaunched() {
         DataPickerDialogFragment().show(supportFragmentManager, FragmentTag.DATE_PICKER.toString())
+    }
+
+    override fun onDateSeleceted() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

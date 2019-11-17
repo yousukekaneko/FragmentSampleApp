@@ -5,7 +5,8 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_edit.*
 
-class EditActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener {
+class EditActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener,
+        DataPickerDialogFragment.OndateSetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,10 @@ class EditActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     //EditFragment.OnFragmentInteractionListener
     override fun onDataPickerLaunched() {
         DataPickerDialogFragment().show(supportFragmentManager, FragmentTag.DATE_PICKER.toString())
+    }
+
+    override fun onDateSeleceted() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }
