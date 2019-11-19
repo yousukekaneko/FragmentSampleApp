@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         //null出ない時は、isTwoPaneをtrueにする。
         if (container_detail != null) isTwoPane = true
 
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container_master, MasterFragment.newInstance(1),
+                FragmentTag.MASTER.toString()).commit()
+
         fab.setOnClickListener { view ->
             goEditScreen("","","", false, ModeInEdit.NEW_ENTRY)
         }
