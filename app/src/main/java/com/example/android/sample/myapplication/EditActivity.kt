@@ -57,4 +57,9 @@ class EditActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         inputDateText.setText(dateString)
     }
 
+    // EditFragment.OnFragmentInteractionListener
+    override fun onDataEdited() {
+        finish()
+    }
+
 }

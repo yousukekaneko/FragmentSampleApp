@@ -78,4 +78,10 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         val inputDateText = findViewById<EditText>(R.id.inputDateText)
         inputDateText.setText(dateString)
     }
+
+    // EditFragment.OnFragmentInteractionListener
+    override fun onDataEdited() {
+        // リストの更新処理
+    }
+
 }

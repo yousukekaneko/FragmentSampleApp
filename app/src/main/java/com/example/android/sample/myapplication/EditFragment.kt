@@ -99,6 +99,8 @@ class EditFragment : Fragment() {
             ModeInEdit.NEW_ENTRY -> addNewTodo()
             ModeInEdit.EDIT -> editExistingTodo()
         }
+        listener?.onDataEdited()
+        fragmentManager?.beginTransaction()?.remove(this)?.commit()
 
     }
 
@@ -159,6 +161,7 @@ class EditFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         fun onDataPickerLaunched()
+        fun onDataEdited()
     }
 
     companion object {
