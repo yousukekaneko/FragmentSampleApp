@@ -34,6 +34,11 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateTodoList() //スマホの場合のリスト更新
+    }
+
     private fun goEditScreen(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) {
         if (isTwoPane) {
 
@@ -84,8 +89,15 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     }
 
     // EditFragment.OnFragmentInteractionListener
+    // タブレットの場合の更新処理
     override fun onDataEdited() {
-        // リストの更新処理
+        updateTodoList()
+    }
+
+    private fun updateTodoList() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container_master, MasterFragment.newInstance(1),
+                FragmentTag.MASTER.toString()).commit()
     }
 
 }
