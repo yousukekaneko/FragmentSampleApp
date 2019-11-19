@@ -90,11 +90,28 @@ class EditFragment : Fragment() {
     }
 
     private fun recordToRealmDB(mode: ModeInEdit?) {
+
+        // タイトルと期日がセットされていないと登録できない
+        val isRequiredItemsFilled = isRequiredFilledCheck()
+        if (!isRequiredItemsFilled) return
+
         when (mode) {
             ModeInEdit.NEW_ENTRY -> addNewTodo()
             ModeInEdit.EDIT -> editExistingTodo()
         }
 
+    }
+
+    private fun isRequiredFilledCheck(): Boolean {
+        if (inputTitleText.text.toString() == ""){
+            inputTitle.error = getString(R.string.error)
+            return false
+        }
+        if (inputDateText.text.toString() == "") {
+            inputDate.error = getString(R.string.error)
+            return false
+        }
+        return true
     }
 
     private fun editExistingTodo() {
