@@ -30,6 +30,7 @@ class MasterFragment : Fragment() {
         }
     }
 
+    //変更箇所
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
