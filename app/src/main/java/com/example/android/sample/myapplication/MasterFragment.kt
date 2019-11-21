@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.sample.myapplication.dummy.DummyContent
-import com.example.android.sample.myapplication.dummy.DummyContent.DummyItem
+import io.realm.Realm
 
 /**
  * A fragment representing a list of Items.
@@ -45,8 +44,14 @@ class MasterFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyMasterRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                val realm = Realm.getDefaultInstance()
+                val result = realm.where(TodoModel::class.java)
+                    .equalTo(TodoModel::isCompleted.name, false)
+                    .sort(TodoModel::deadline.name).findAll()
+                adapter = MyMasterRecyclerViewAdapter(result, listener)
             }
+
+
         }
         return view
     }
@@ -95,7 +100,7 @@ class MasterFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: TodoModel)
     }
 
     companion object {

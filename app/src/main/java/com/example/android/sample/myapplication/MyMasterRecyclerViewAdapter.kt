@@ -1,14 +1,18 @@
 package com.example.android.sample.myapplication
 
+import android.media.Image
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 
 
 import com.example.android.sample.myapplication.MasterFragment.OnListFragmentInteractionListener
 import com.example.android.sample.myapplication.dummy.DummyContent.DummyItem
+import io.realm.Realm.init
+import io.realm.RealmResults
 
 import kotlinx.android.synthetic.main.fragment_master.view.*
 
@@ -18,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_master.view.*
  * TODO: Replace the implementation with code for your data type.
  */
 class MyMasterRecyclerViewAdapter(
-    private val mValues: List<DummyItem>,
+    private val mValues: RealmResults<TodoModel>,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<MyMasterRecyclerViewAdapter.ViewHolder>() {
 
@@ -33,16 +37,17 @@ class MyMasterRecyclerViewAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_master, parent, false)
-        return ViewHolder(view)
+        return RecyclerView.ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.mItem = mValues[position]
+        holder.textViewTitle.text = mValues[position]?.title
+        holder.textViewDeadline.text = mValues[position]?.deadline
+        holder.imageStatus
 
         with(holder.mView) {
             tag = item
@@ -53,11 +58,16 @@ class MyMasterRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+        val textViewTitle : TextView
+        val textViewDeadline : TextView
+        val imageStatus : ImageView
 
-        override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+        var item : TodoModel = null
+
+        init {
+            textViewTitle = mView.findViewById(R.id.textViewTitle) as TextView
+            textViewDeadline = mView.findViewById(R.id.textViewDeadline) as TextView
+            imageStatus = mView.findViewById(R.id.imageStatus) as ImageView
         }
     }
 }
