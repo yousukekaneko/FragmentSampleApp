@@ -10,11 +10,11 @@ import android.widget.TextView
 
 
 import com.example.android.sample.myapplication.MasterFragment.OnListFragmentInteractionListener
-import com.example.android.sample.myapplication.dummy.DummyContent.DummyItem
-import io.realm.Realm.init
 import io.realm.RealmResults
 
 import kotlinx.android.synthetic.main.fragment_master.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
@@ -44,10 +44,18 @@ class MyMasterRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mItem = mValues[position]
+        holder.item = mValues[position]!!
         holder.textViewTitle.text = mValues[position]?.title
         holder.textViewDeadline.text = mValues[position]?.deadline
-        holder.imageStatus
+
+        val changedDeadline = SimpleDateFormat("yyyy/MM/dd").parse(mValues[position]?.deadline)
+        val today = Date()
+        if (today >= changedDeadline) {
+            holder.imageStatus.setImageResource(R.drawable.ic_warning_black_24dp)
+        } else {
+            holder.imageStatus.setImageResource((R.drawable.ic_work_black_24dp)
+        }
+
 
         with(holder.mView) {
             tag = item
