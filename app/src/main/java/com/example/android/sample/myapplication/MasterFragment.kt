@@ -29,7 +29,6 @@ class MasterFragment : Fragment() {
         }
     }
 
-    //変更箇所
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -100,7 +99,7 @@ class MasterFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: TodoModel)
+        fun onListItemClicked(item: TodoModel)
     }
 
     companion object {

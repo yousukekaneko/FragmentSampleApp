@@ -1,6 +1,5 @@
 package com.example.android.sample.myapplication
 
-import android.media.Image
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -33,32 +32,31 @@ class MyMasterRecyclerViewAdapter(
             val item = v.tag as DummyItem
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            mListener?.onListItemClicked(item)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_master, parent, false)
-        return RecyclerView.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.item = mValues[position]!!
+        val item = mValues[position]!!
         holder.textViewTitle.text = mValues[position]?.title
-        holder.textViewDeadline.text = mValues[position]?.deadline
+        holder.textViewDeadline.text = MyApplication.appContext.getString(R.string.deadline) + " : " + mValues[position]?.deadline
 
         val changedDeadline = SimpleDateFormat("yyyy/MM/dd").parse(mValues[position]?.deadline)
         val today = Date()
         if (today >= changedDeadline) {
             holder.imageStatus.setImageResource(R.drawable.ic_warning_black_24dp)
         } else {
-            holder.imageStatus.setImageResource((R.drawable.ic_work_black_24dp)
+            holder.imageStatus.setImageResource(R.drawable.ic_work_black_24dp)
         }
 
 
         with(holder.mView) {
-            tag = item
             setOnClickListener(mOnClickListener)
         }
     }
@@ -70,7 +68,7 @@ class MyMasterRecyclerViewAdapter(
         val textViewDeadline : TextView
         val imageStatus : ImageView
 
-        var item : TodoModel = null
+        var item : TodoModel? = null
 
         init {
             textViewTitle = mView.findViewById(R.id.textViewTitle) as TextView

@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_detail.*
 
 class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener,
-    DataPickerDialogFragment.OnDateSetListener {
+    DataPickerDialogFragment.OnDateSetListener, MasterFragment.OnListFragmentInteractionListener {
 
     var isTwoPane: Boolean = false
 
@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         supportFragmentManager.beginTransaction()
             .replace(R.id.container_master, MasterFragment.newInstance(1),
                 FragmentTag.MASTER.toString()).commit()
+    }
+
+    // MasterFragment.OnListFragmentInteractionListener
+    override fun onListItemClicked(item: TodoModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }
