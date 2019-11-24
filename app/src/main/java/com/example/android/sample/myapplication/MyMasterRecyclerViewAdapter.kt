@@ -1,17 +1,14 @@
 package com.example.android.sample.myapplication
 
-import androidx.recyclerview.widget.RecyclerView
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
-
+import androidx.recyclerview.widget.RecyclerView
 import com.example.android.sample.myapplication.MasterFragment.OnListFragmentInteractionListener
 import io.realm.RealmResults
-
-import kotlinx.android.synthetic.main.fragment_master.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,7 +26,7 @@ class MyMasterRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as TodoModel
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListItemClicked(item)
