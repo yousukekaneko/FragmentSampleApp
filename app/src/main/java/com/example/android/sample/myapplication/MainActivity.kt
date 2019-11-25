@@ -40,11 +40,16 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     }
 
     private fun goEditScreen(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) {
-        if (isTwoPane) {
-
+        if (supportFragmentManager.findFragmentByTag(FragmentTag.EDIT.toString()) == null &&
+            supportFragmentManager.findFragmentByTag(FragmentTag.DETAIL.toString()) == null) {
+                supportFragmentManager.beginTransaction()
+                                      .add(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
+                                      .commit()
+                return
+        } else {
             supportFragmentManager.beginTransaction()
-                                  .add(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
-                                  .commit()
+                .replace(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
+                .commit()
             return
         }
         val intent = Intent(this@MainActivity, EditActivity::class.java).apply {
@@ -102,7 +107,30 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     // MasterFragment.OnListFragmentInteractionListener
     override fun onListItemClicked(item: TodoModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        goDetailScreen(item.title, item.deadline, item.taskDetail, item.isCompleted)
+    }
+
+    private fun goDetailScreen(title: String, deadline: String, taskDetail: String, isCompleted: Boolean) {
+        if (isTwoPane) {
+            if (supportFragmentManager.findFragmentByTag(FragmentTag.EDIT.toString()) == null &&
+                    supportFragmentManager.findFragmentByTag(FragmentTag.DETAIL.toString()) == null) {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container_detail, DetailFragment.newInstance(title, deadline, taskDetail, isCompleted),
+                        FragmentTag.DETAIL.toString()).commit()
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container_detail, DetailFragment.newInstance(title, deadline, taskDetail, isCompleted),
+                        FragmentTag.DETAIL.toString()).commit()
+            }
+            return
+        }
+        val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
+            putExtra(IntentKey.TITLE.name, title)
+            putExtra(IntentKey.DEADLINE.name, deadline)
+            putExtra(IntentKey.TASK_DETAIL.name, taskDetail)
+            putExtra(IntentKey.IS_COMPLETED.name, isCompleted)
+        }
+        startActivity(intent)
     }
 
 }
