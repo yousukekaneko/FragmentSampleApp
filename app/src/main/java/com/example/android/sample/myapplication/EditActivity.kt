@@ -22,7 +22,6 @@ class EditActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
             }
         }
 
-        // MainActivityからのIntent受け取り
         val bundle = intent.extras
         val title = bundle.getString(IntentKey.TITLE.name)
         val deadline = bundle.getString(IntentKey.DEADLINE.name)

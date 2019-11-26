@@ -1,5 +1,6 @@
 package com.example.android.sample.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -45,6 +46,25 @@ class DetailActivity : AppCompatActivity(), DetailFragment.OnFragmentInteraction
 
     //DetailFragment.OnFragmentInteractionListener#onDataDeleted
     override fun onDataDeleted() {
+        finish()
+    }
+
+    //DetailFragment.OnFragmentInteractionListener#onEditSelectedTodo
+    override fun onEditSelectedTodo(
+        title: String,
+        deadline: String,
+        taskDetail: String,
+        isCompleted: Boolean,
+        mode: ModeInEdit
+    ) {
+        val intent = Intent(this@DetailActivity, EditActivity::class.java).apply {
+            putExtra(IntentKey.TITLE.name, title)
+            putExtra(IntentKey.DEADLINE.name, deadline)
+            putExtra(IntentKey.TASK_DETAIL.name, taskDetail)
+            putExtra(IntentKey.IS_COMPLETED.name, isCompleted)
+            putExtra(IntentKey.MODE_IN_EDIT.name, mode)
+        }
+        startActivity(intent)
         finish()
     }
 }
