@@ -1,10 +1,10 @@
 package com.example.android.sample.myapplication
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,13 +69,32 @@ class DetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
+            R.id.menu_delete -> {
+                deleteSelectedTodo(title, deadline, taskDetail)
+            }
+            R.id.menu_edit -> {
 
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+
+    private fun deleteSelectedTodo(title: String?, deadline: String?, taskDetail: String?) {
+        val realm = Realm.getDefaultInstance()
+        val selectedTodo = realm.where(TodoModel::class.java)
+            .equalTo(TodoModel::title.name, title)
+            .equalTo(TodoModel::deadline.name, deadline)
+            .equalTo(TodoModel::taskDetail.name, taskDetail)
+            .findFirst()
+        realm.beginTransaction()
+        selectedTodo!!.deleteFromRealm()
+        realm.commitTransaction()
+
+        listener?.onDataDeleted()
+        fragmentManager!!.beginTransaction().remove(this).commit()
+
+        realm.close()
     }
 
     override fun onAttach(context: Context) {
@@ -104,8 +123,7 @@ class DetailFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onDataDeleted()
     }
 
     companion object {
