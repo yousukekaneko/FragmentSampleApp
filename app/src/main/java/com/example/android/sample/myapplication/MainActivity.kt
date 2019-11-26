@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_detail.*
 
 class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionListener,
-    DataPickerDialogFragment.OnDateSetListener, MasterFragment.OnListFragmentInteractionListener {
+    DataPickerDialogFragment.OnDateSetListener, MasterFragment.OnListFragmentInteractionListener,
+    DetailFragment.OnFragmentInteractionListener {
 
     var isTwoPane: Boolean = false
 
@@ -133,4 +134,8 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         startActivity(intent)
     }
 
+    //DetailFragment.OnFragmentInteractionListener#onDataDeleted
+    override fun onDataDeleted() {
+        updateTodoList()
+    }
 }
