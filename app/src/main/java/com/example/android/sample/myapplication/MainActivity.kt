@@ -138,4 +138,15 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
     override fun onDataDeleted() {
         updateTodoList()
     }
+
+    //DetailFragment.OnFragmentInteractionListener#onEditSelectedTodo
+    override fun onEditSelectedTodo(
+        title: String,
+        deadline: String,
+        taskDetail: String,
+        isCompleted: Boolean,
+        mode: ModeInEdit
+    ) {
+        goEditScreen(title, deadline, taskDetail, isCompleted, mode)
+    }
 }
