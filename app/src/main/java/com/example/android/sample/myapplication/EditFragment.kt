@@ -97,6 +97,7 @@ class EditFragment : Fragment() {
         listener?.onDataEdited()
         fragmentManager?.beginTransaction()?.remove(this)?.commit()
 
+
     }
 
     private fun isRequiredFilledCheck(): Boolean {
