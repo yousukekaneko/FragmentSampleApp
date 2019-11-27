@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,18 +41,23 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
         updateTodoList() //スマホの場合のリスト更新
     }
 
-    private fun goEditScreen(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) {
-        if (supportFragmentManager.findFragmentByTag(FragmentTag.EDIT.toString()) == null &&
-            supportFragmentManager.findFragmentByTag(FragmentTag.DETAIL.toString()) == null) {
+    private fun goEditScreen(title: String, deadline: String,
+                             taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) {
+
+        if (isTwoPane) {
+            fab.visibility = View.INVISIBLE
+            if (supportFragmentManager.findFragmentByTag(FragmentTag.EDIT.toString()) == null &&
+                supportFragmentManager.findFragmentByTag(FragmentTag.DETAIL.toString()) == null) {
                 supportFragmentManager.beginTransaction()
-                                      .add(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
-                                      .commit()
+                    .add(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
+                    .commit()
                 return
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
-                .commit()
-            return
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container_detail, EditFragment.newInstance(title, deadline, taskDetail, isCompleted, mode), FragmentTag.EDIT.toString())
+                    .commit()
+                return
+            }
         }
         val intent = Intent(this@MainActivity, EditActivity::class.java).apply {
             putExtra(IntentKey.TITLE.name, title)
@@ -136,6 +142,7 @@ class MainActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
 
     //DetailFragment.OnFragmentInteractionListener#onDataDeleted
     override fun onDataDeleted() {
+        if (isTwoPane) fab.visibility = View.VISIBLE
         updateTodoList()
     }
 

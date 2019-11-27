@@ -7,15 +7,6 @@ import androidx.fragment.app.Fragment
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_edit.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private var ARG_title = IntentKey.TITLE.name
-private var ARG_deadline = IntentKey.DEADLINE.name
-private var ARG_taskdetail = IntentKey.TASK_DETAIL.name
-private var ARG_iscompleted = IntentKey.IS_COMPLETED.name
-private var ARG_mode = IntentKey.MODE_IN_EDIT.name
-
-
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
@@ -25,6 +16,7 @@ private var ARG_mode = IntentKey.MODE_IN_EDIT.name
  * create an instance of this fragment.
  */
 class EditFragment : Fragment() {
+
     private var title: String? = ""
     private var deadline: String? = ""
     private var taskDetail: String? = ""
@@ -38,9 +30,9 @@ class EditFragment : Fragment() {
         arguments?.let {
             title = it.getString(ARG_title)
             deadline = it.getString(ARG_deadline)
-            taskDetail = it.getString(ARG_taskdetail)
-            isCompleted = it.getBoolean(ARG_iscompleted)
-            mode = it.getSerializable(ARG_title) as ModeInEdit
+            taskDetail = it.getString(ARG_taskDetail)
+            isCompleted = it.getBoolean(ARG_isCompleted)
+            mode = it.getSerializable(ARG_mode) as ModeInEdit
 
         }
     }
@@ -121,12 +113,13 @@ class EditFragment : Fragment() {
 
     private fun editExistingTodo() {
         val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
         val selectedTodo = realm.where(TodoModel::class.java)
             .equalTo(TodoModel::title.name, title)
             .equalTo(TodoModel::deadline.name, deadline)
             .equalTo(TodoModel::taskDetail.name, taskDetail)
             .findFirst()
-        realm.beginTransaction()
+
         selectedTodo!!.apply {
             title = inputTitleText.text.toString()
             deadline = inputDateText.text.toString()
@@ -134,6 +127,7 @@ class EditFragment : Fragment() {
             isCompleted = if (checkBox.isChecked) true else false
         }
         realm.commitTransaction()
+        realm.close()
     }
 
     private fun addNewTodo() {
@@ -189,17 +183,25 @@ class EditFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment EditFragment.
          */
-        // TODO: Rename and change types and number of parameters
+
+        private val ARG_title = IntentKey.TITLE.name
+        private val ARG_deadline = IntentKey.DEADLINE.name
+        private val ARG_taskDetail = IntentKey.TASK_DETAIL.name
+        private val ARG_isCompleted = IntentKey.IS_COMPLETED.name
+        private val ARG_mode = IntentKey.MODE_IN_EDIT.name
+
         @JvmStatic
-        fun newInstance(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit) =
+        fun newInstance(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit): EditFragment {
             EditFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_title, title)
                     putString(ARG_deadline, deadline)
-                    putString(ARG_taskdetail, taskDetail)
-                    putBoolean(ARG_iscompleted, isCompleted)
+                    putString(ARG_taskDetail, taskDetail)
+                    putBoolean(ARG_isCompleted, isCompleted)
                     putSerializable(ARG_mode, mode)
                 }
             }
+            return EditFragment()
+        }
     }
 }
