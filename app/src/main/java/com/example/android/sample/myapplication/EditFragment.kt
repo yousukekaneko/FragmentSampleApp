@@ -48,7 +48,8 @@ class EditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        updateUi(mode!!)
+        //mode!!が使えないので以下の記述に変更
+        mode?.let { updateUi(it) }
         imageButtonDateSet.setOnClickListener {
             listener!!.onDataPickerLaunched()
         }
@@ -73,7 +74,7 @@ class EditFragment : Fragment() {
         menu!!.apply {
             findItem(R.id.menu_delete).isVisible = false
             findItem(R.id.menu_edit).isVisible = false
-            findItem(R.id.menu_register).isVisible = false
+            findItem(R.id.menu_register).isVisible = true
 
         }
     }

@@ -42,7 +42,6 @@ class EditActivity : AppCompatActivity(), EditFragment.OnFragmentInteractionList
             findItem(R.id.menu_edit).isVisible = false
             findItem(R.id.menu_register).isVisible = false
         }
-
         return true
     }
 
