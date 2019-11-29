@@ -16,7 +16,6 @@ import io.realm.Realm
  */
 class MasterFragment : Fragment() {
 
-    // TODO: Customize parameters
     private var columnCount = 1
 
     private var listener: OnListFragmentInteractionListener? = null
@@ -98,16 +97,14 @@ class MasterFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         fun onListItemClicked(item: TodoModel)
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
             MasterFragment().apply {

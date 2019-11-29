@@ -14,8 +14,7 @@ import java.util.*
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
+ * specified [OnListFragmentInteractionListener]
  */
 class MyMasterRecyclerViewAdapter(
     private val mValues: RealmResults<TodoModel>,

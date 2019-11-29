@@ -91,14 +91,15 @@ class EditFragment : Fragment() {
         val isRequiredItemsFilled = isRequiredFilledCheck()
         if (!isRequiredItemsFilled) return
 
+        if (mode == null ) {
+            addNewTodo()
+        }
         when (mode) {
             ModeInEdit.NEW_ENTRY -> addNewTodo()
             ModeInEdit.EDIT -> editExistingTodo()
         }
         listener?.onDataEdited()
         fragmentManager?.beginTransaction()?.remove(this)?.commit()
-
-
     }
 
     private fun isRequiredFilledCheck(): Boolean {

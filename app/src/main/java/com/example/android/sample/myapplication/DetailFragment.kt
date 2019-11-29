@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_detail.*
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private var ARG_title = IntentKey.TITLE.name
 private var ARG_deadline = IntentKey.DEADLINE.name
@@ -23,7 +22,7 @@ private var ARG_iscompleted = IntentKey.IS_COMPLETED.name
  * create an instance of this fragment.
  */
 class DetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var title: String? = ""
     private var deadline: String? = ""
     private var taskDetail: String? = ""
@@ -137,7 +136,7 @@ class DetailFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment DetailFragment.
          */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(title: String, deadline: String, taskDetail: String, isCompleted: Boolean) =
             DetailFragment().apply {
