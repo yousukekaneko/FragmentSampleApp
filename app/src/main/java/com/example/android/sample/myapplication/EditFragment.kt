@@ -91,6 +91,7 @@ class EditFragment : Fragment() {
         val isRequiredItemsFilled = isRequiredFilledCheck()
         if (!isRequiredItemsFilled) return
 
+        //TODO 無理やりmodeがnullでも単語をスケジュールを追加できるようにしたが、修正必要
         if (mode == null ) {
             addNewTodo()
         }
