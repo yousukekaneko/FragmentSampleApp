@@ -92,9 +92,9 @@ class EditFragment : Fragment() {
         if (!isRequiredItemsFilled) return
 
         //TODO 無理やりmodeがnullでも単語をスケジュールを追加できるようにしたが、修正必要
-        if (mode == null ) {
-            addNewTodo()
-        }
+//        if (mode == null ) {
+//            addNewTodo()
+//        }
         when (mode) {
             ModeInEdit.NEW_ENTRY -> addNewTodo()
             ModeInEdit.EDIT -> editExistingTodo()
@@ -196,7 +196,7 @@ class EditFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit): EditFragment {
-            EditFragment().apply {
+                return EditFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_title, title)
                     putString(ARG_deadline, deadline)
@@ -205,7 +205,6 @@ class EditFragment : Fragment() {
                     putSerializable(ARG_mode, mode)
                 }
             }
-            return EditFragment()
         }
     }
 }
