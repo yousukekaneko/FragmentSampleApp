@@ -25,6 +25,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="@string/title"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -32,6 +33,7 @@
         <TextView
             android:id="@+id/title_Detail"
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
             android:layout_height="48dp" />
 
         <TextView
@@ -43,6 +45,7 @@
             android:id="@+id/deadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="@string/deadline"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -50,6 +53,7 @@
         <TextView
             android:id="@+id/deadline_Detail"
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
             android:layout_height="48dp" />
 
         <TextView
@@ -61,6 +65,7 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="@string/task_detail"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -68,6 +73,7 @@
         <TextView
             android:id="@+id/todo_Detail"
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
             android:layout_height="309dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
