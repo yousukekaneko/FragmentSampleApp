@@ -21,17 +21,6 @@ class MyMasterRecyclerViewAdapter(
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<MyMasterRecyclerViewAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnClickListener
-
-    init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as TodoModel
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListItemClicked(item)
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_master, parent, false)
@@ -39,7 +28,7 @@ class MyMasterRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = mValues[position]!!
+        holder.mItem = mValues[position]!!
         holder.textViewTitle.text = mValues[position]?.title
         holder.textViewDeadline.text = MyApplication.appContext.getString(R.string.deadline) + " : " + mValues[position]?.deadline
 
@@ -51,9 +40,8 @@ class MyMasterRecyclerViewAdapter(
             holder.imageStatus.setImageResource(R.drawable.ic_work_black_24dp)
         }
 
-
-        with(holder.mView) {
-            setOnClickListener(mOnClickListener)
+        holder.mView.setOnClickListener{
+            mListener?.onListItemClicked(holder.mItem!!)
         }
     }
 
@@ -64,7 +52,7 @@ class MyMasterRecyclerViewAdapter(
         val textViewDeadline : TextView
         val imageStatus : ImageView
 
-        var item : TodoModel? = null
+        var mItem : TodoModel? = null
 
         init {
             textViewTitle = mView.findViewById(R.id.textViewTitle) as TextView

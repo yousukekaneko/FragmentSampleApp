@@ -196,7 +196,8 @@ class EditFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(title: String, deadline: String, taskDetail: String, isCompleted: Boolean, mode: ModeInEdit): EditFragment {
-                return EditFragment().apply {
+
+            return EditFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_title, title)
                     putString(ARG_deadline, deadline)
